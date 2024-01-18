@@ -1,1 +1,12 @@
+spring:
+  datasource:
+    url: jdbc:mysql://localhost:3306/rest_with_spring_boot_and_java?useTimezone=true&serverTimezone=UTC
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    username: root
+    password: root
 
+  jpa:
+    open-in-view: false
+    hibernate:
+      ddl-auto: update
+    show-sql: false

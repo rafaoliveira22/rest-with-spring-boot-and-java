@@ -3,21 +3,15 @@ package br.com.rafaoliveira.controllers;
 import br.com.rafaoliveira.model.Person;
 import br.com.rafaoliveira.services.PersonServices;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.concurrent.atomic.AtomicLong;
 
 @RestController
 @RequestMapping("/person")
 public class PersonController {
-
-    // Instanciação manual s/ injeção de depências[
-    // private PersonServices service = new PersonServices();
-
-    // Injeção de depêndencias automática (@Service - @Autowired)
     @Autowired
     private PersonServices service;
 
@@ -27,7 +21,7 @@ public class PersonController {
     }
 
     @GetMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public Person findById(@PathVariable String id)  {
+    public Person findById(@PathVariable Long id)  {
         return service.findById(id);
     }
 
@@ -42,7 +36,8 @@ public class PersonController {
     }
 
     @DeleteMapping(value = "/{id}")
-    public void delete(@PathVariable String id)  {
+    public ResponseEntity<?> delete(@PathVariable Long id)  {
         service.delete(id);
+        return ResponseEntity.noContent().build();
     }
 }
