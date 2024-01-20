@@ -1,8 +1,10 @@
 package br.com.rafaoliveira.services;
 
 import br.com.rafaoliveira.data.vo.v1.PersonVO;
+import br.com.rafaoliveira.data.vo.v2.PersonVOV2;
 import br.com.rafaoliveira.exceptions.ResourceNotFoundException;
 import br.com.rafaoliveira.mapper.DozerMapper;
+import br.com.rafaoliveira.mapper.custom.PersonMapper;
 import br.com.rafaoliveira.model.Person;
 import br.com.rafaoliveira.repositories.PersonRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +19,9 @@ public class PersonServices {
 
     @Autowired
     public PersonRepository repository;
+
+    @Autowired
+    public PersonMapper mapper;
 
     public List<PersonVO> findByAll(){
         logger.info("Finding all persons");
@@ -38,6 +43,15 @@ public class PersonServices {
         PersonVO personVO = DozerMapper.parseObject(repository.save(personEntity), PersonVO.class);
 
         return personVO;
+    }
+
+    public PersonVOV2 createV2(PersonVOV2 person){
+        logger.info("Creating a person v2");
+
+        Person personEntity = mapper.convertVoToEntity(person);
+        PersonVOV2 personVOV2 = mapper.convertEntityToVo(repository.save(personEntity));
+
+        return personVOV2;
     }
 
     public PersonVO update(PersonVO person){
