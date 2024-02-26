@@ -1,15 +1,22 @@
 package br.com.rafaoliveira.data.vo.v1;
 
+import br.com.rafaoliveira.model.Person;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
+import com.github.dozermapper.core.Mapping;
 import jakarta.persistence.*;
+import org.springframework.hateoas.RepresentationModel;
 
 import java.io.Serializable;
 
-
-public class PersonVO implements Serializable {
+@JsonPropertyOrder({"id", "firstName", "lastName", "addres", "gender"})
+public class PersonVO extends RepresentationModel<PersonVO> implements Serializable {
     private static final long serialVersionUID = 1L;
 
 
-    private Long id;
+    @JsonProperty("id")
+    @Mapping("id")
+    private Long key;
     private String firstName;
     private String lastName;
     private String address;
@@ -17,13 +24,13 @@ public class PersonVO implements Serializable {
 
     public PersonVO(){}
 
-    public Long getId(){
-        return id;
-    }
-    public void setId(Long id){
-        this.id = id;
+    public Long getKey() {
+        return key;
     }
 
+    public void setKey(Long key) {
+        this.key = key;
+    }
     public String getFirstName() {
         return firstName;
     }
@@ -63,7 +70,7 @@ public class PersonVO implements Serializable {
         result = prime * result + ((getAddress() == null) ? 0 : getAddress().hashCode());
         result = prime * result + ((getFirstName() == null) ? 0 : getFirstName().hashCode());
         result = prime * result + ((getGender() == null) ? 0 : getGender().hashCode());
-        result = prime * result + ((getId() == null) ? 0 : getId().hashCode());
+        result = prime * result + ((getKey() == null) ? 0 : getKey().hashCode());
         result = prime * result + ((getLastName() == null) ? 0 : getLastName().hashCode());
         return result;
     }
@@ -104,10 +111,10 @@ public class PersonVO implements Serializable {
                 return false;
         } else if (!getGender().equals(other.getGender()))
             return false;
-        if (getId() == null) {
-            if (other.getId() != null)
+        if (getKey() == null) {
+            if (other.getKey() != null)
                 return false;
-        } else if (!getId().equals(other.getId()))
+        } else if (!getKey().equals(other.getKey()))
             return false;
         if (getLastName() == null) {
             if (other.getLastName() != null)
