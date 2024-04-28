@@ -2,6 +2,7 @@ package br.com.rafaoliveira.services;
 
 import br.com.rafaoliveira.controllers.PersonController;
 import br.com.rafaoliveira.data.vo.v1.PersonVO;
+import br.com.rafaoliveira.exceptions.RequiredObjectIsNullException;
 import br.com.rafaoliveira.exceptions.ResourceNotFoundException;
 import br.com.rafaoliveira.mapper.DozerMapper;
 import br.com.rafaoliveira.model.Person;
@@ -41,6 +42,9 @@ public class PersonServices {
     }
 
     public PersonVO create(PersonVO person){
+        if(person == null){
+            throw new RequiredObjectIsNullException();
+        }
         logger.info("Creating a person");
 
         Person personEntity = DozerMapper.parseObject(person, Person.class);
@@ -51,6 +55,10 @@ public class PersonServices {
     }
 
     public PersonVO update(PersonVO person){
+        if(person == null){
+            throw new RequiredObjectIsNullException();
+        }
+
         logger.info("Updating a person");
         Person personEntity = repository.findById(person.getKey())
                         .orElseThrow(() -> new ResourceNotFoundException("No records found for this ID."));
