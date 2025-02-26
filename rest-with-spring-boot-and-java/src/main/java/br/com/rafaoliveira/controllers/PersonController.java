@@ -1,6 +1,7 @@
 package br.com.rafaoliveira.controllers;
 
-import br.com.rafaoliveira.data.vo.v1.PersonVO;
+import br.com.rafaoliveira.data.dto.v1.PersonDTOV1;
+import br.com.rafaoliveira.data.dto.v2.PersonDTOV2;
 import br.com.rafaoliveira.services.PersonServices;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.ArraySchema;
@@ -29,7 +30,7 @@ public class PersonController {
             tags = {"People"},
             responses = {
                 @ApiResponse(description = "Success", responseCode = "200", content = {
-                        @Content(mediaType = "application/json", array = @ArraySchema(schema = @Schema(implementation = PersonVO.class)))
+                        @Content(mediaType = "application/json", array = @ArraySchema(schema = @Schema(implementation = PersonDTOV1.class)))
                 }),
                 @ApiResponse(description = "Bad Request", responseCode = "400", content = @Content),
                 @ApiResponse(description = "Unauthorized", responseCode = "401", content = @Content),
@@ -37,7 +38,7 @@ public class PersonController {
                 @ApiResponse(description = "Internal Server Error", responseCode = "500", content = @Content)
             }
     )
-    public List<PersonVO> findByAll()  {
+    public List<PersonDTOV1> findByAll()  {
         return service.findByAll();
     }
 
@@ -47,7 +48,7 @@ public class PersonController {
             description = "Finds a Person",
             tags = {"People"},
             responses = {
-                    @ApiResponse(description = "Success", responseCode = "200", content = @Content(schema = @Schema(implementation = PersonVO.class))),
+                    @ApiResponse(description = "Success", responseCode = "200", content = @Content(schema = @Schema(implementation = PersonDTOV1.class))),
                     @ApiResponse(description = "No Content", responseCode = "204", content = @Content),
                     @ApiResponse(description = "Bad Request", responseCode = "400", content = @Content),
                     @ApiResponse(description = "Unauthorized", responseCode = "401", content = @Content),
@@ -55,7 +56,7 @@ public class PersonController {
                     @ApiResponse(description = "Internal Server Error", responseCode = "500", content = @Content)
             }
     )
-    public PersonVO findById(@PathVariable Long id)  {
+    public PersonDTOV1 findById(@PathVariable Long id)  {
         return service.findById(id);
     }
 
@@ -68,13 +69,13 @@ public class PersonController {
             description = "Adds a new Person by passing in a JSON, XML or YML representation of the person",
             tags = {"People"},
             responses = {
-                    @ApiResponse(description = "Success", responseCode = "200", content = @Content(schema = @Schema(implementation = PersonVO.class))),
+                    @ApiResponse(description = "Success", responseCode = "200", content = @Content(schema = @Schema(implementation = PersonDTOV1.class))),
                     @ApiResponse(description = "Bad Request", responseCode = "400", content = @Content),
                     @ApiResponse(description = "Unauthorized", responseCode = "401", content = @Content),
                     @ApiResponse(description = "Internal Server Error", responseCode = "500", content = @Content)
             }
     )
-    public PersonVO create(@RequestBody PersonVO person)  {
+    public PersonDTOV1 create(@RequestBody PersonDTOV1 person)  {
         return service.create(person);
     }
 
@@ -87,14 +88,14 @@ public class PersonController {
             description = "Updates a  Person by passing in a JSON, XML or YML representation of the person",
             tags = {"People"},
             responses = {
-                    @ApiResponse(description = "Success", responseCode = "200", content = @Content(schema = @Schema(implementation = PersonVO.class))),
+                    @ApiResponse(description = "Success", responseCode = "200", content = @Content(schema = @Schema(implementation = PersonDTOV1.class))),
                     @ApiResponse(description = "Bad Request", responseCode = "400", content = @Content),
                     @ApiResponse(description = "Unauthorized", responseCode = "401", content = @Content),
                     @ApiResponse(description = "Not Found", responseCode = "404", content = @Content),
                     @ApiResponse(description = "Internal Server Error", responseCode = "500", content = @Content)
             }
     )
-    public PersonVO update(@RequestBody PersonVO person)  {
+    public PersonDTOV1 update(@RequestBody PersonDTOV1 person)  {
         return service.update(person);
     }
 

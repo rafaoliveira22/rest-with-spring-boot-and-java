@@ -1,18 +1,20 @@
 package br.com.rafaoliveira.unittests.mapper.mocks;
 
-import br.com.rafaoliveira.data.vo.v1.PersonVO;
+import br.com.rafaoliveira.data.dto.v1.PersonDTOV1;
 import br.com.rafaoliveira.model.Person;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class MockPerson {
+
+
     public Person mockEntity() {
         return mockEntity(0);
     }
 
-    public PersonVO mockVO() {
-        return mockVO(0);
+    public PersonDTOV1 mockDTO() {
+        return mockDTO(0);
     }
 
     public List<Person> mockEntityList() {
@@ -23,17 +25,17 @@ public class MockPerson {
         return persons;
     }
 
-    public List<PersonVO> mockVOList() {
-        List<PersonVO> persons = new ArrayList<>();
+    public List<PersonDTOV1> mockDTOList() {
+        List<PersonDTOV1> persons = new ArrayList<>();
         for (int i = 0; i < 14; i++) {
-            persons.add(mockVO(i));
+            persons.add(mockDTO(i));
         }
         return persons;
     }
 
     public Person mockEntity(Integer number) {
         Person person = new Person();
-        person.setAddress("Addres Test" + number);
+        person.setAddress("Address Test" + number);
         person.setFirstName("First Name Test" + number);
         person.setGender(((number % 2)==0) ? "Male" : "Female");
         person.setId(number.longValue());
@@ -41,13 +43,14 @@ public class MockPerson {
         return person;
     }
 
-    public PersonVO mockVO(Integer number) {
-        PersonVO person = new PersonVO();
-        person.setAddress("Addres Test" + number);
+    public PersonDTOV1 mockDTO(Integer number) {
+        PersonDTOV1 person = new PersonDTOV1();
+        person.setAddress("Address Test" + number);
         person.setFirstName("First Name Test" + number);
         person.setGender(((number % 2)==0) ? "Male" : "Female");
-        person.setKey(number.longValue());
+        person.setId(number.longValue());
         person.setLastName("Last Name Test" + number);
         return person;
     }
+
 }
