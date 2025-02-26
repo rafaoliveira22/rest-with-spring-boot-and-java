@@ -1,13 +1,13 @@
-package br.com.rafaoliveira.data.dto;
+package br.com.rafaoliveira.data.dto.v2;
 
 
-import br.com.rafaoliveira.data.vo.v1.PersonVO;
 import org.springframework.hateoas.RepresentationModel;
 
 import java.io.Serializable;
+import java.util.Date;
 import java.util.Objects;
 
-public class PersonDTO extends RepresentationModel<PersonDTO>  implements Serializable {
+public class PersonDTOV2 extends RepresentationModel<PersonDTOV2>  implements Serializable {
     private static final long serialVersionUID = 1L;
 
     private Long id;
@@ -15,8 +15,9 @@ public class PersonDTO extends RepresentationModel<PersonDTO>  implements Serial
     private String lastName;
     private String address;
     private String gender;
+    private Date birthday;
 
-    public PersonDTO(){}
+    public PersonDTOV2(){}
 
 
     public Long getId(){
@@ -58,16 +59,25 @@ public class PersonDTO extends RepresentationModel<PersonDTO>  implements Serial
         this.gender = gender;
     }
 
+    public Date getBirthday() {
+        return birthday;
+    }
+
+    public void setBirthday(Date birthday) {
+        this.birthday = birthday;
+    }
+
     @Override
     public boolean equals(Object o) {
-        if (!(o instanceof PersonDTO person)) return false;
-        return Objects.equals(getId(), person.getId()) && Objects.equals(getFirstName(), person.getFirstName()) && Objects.equals(getLastName(), person.getLastName()) && Objects.equals(getAddress(), person.getAddress()) && Objects.equals(getGender(), person.getGender());
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        if (!super.equals(o)) return false;
+        PersonDTOV2 that = (PersonDTOV2) o;
+        return Objects.equals(id, that.id) && Objects.equals(firstName, that.firstName) && Objects.equals(lastName, that.lastName) && Objects.equals(address, that.address) && Objects.equals(gender, that.gender) && Objects.equals(birthday, that.birthday);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(getId(), getFirstName(), getLastName(), getAddress(), getGender());
+        return Objects.hash(super.hashCode(), id, firstName, lastName, address, gender, birthday);
     }
-
-
 }
