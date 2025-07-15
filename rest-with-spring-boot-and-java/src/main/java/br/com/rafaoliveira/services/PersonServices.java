@@ -32,7 +32,7 @@ public class PersonServices {
         logger.info("Finding all persons");
 
         var persons = ObjectMapper.parseListObjects(repository.findAll(), PersonDTOV1.class);
-        persons.stream().forEach(person -> person.add(linkTo(methodOn(PersonController.class).findById(person.getId())).withSelfRel()));
+        persons.stream().forEach(PersonServices::addHateoasLink);
 
         return persons;
     }
@@ -42,7 +42,7 @@ public class PersonServices {
         var person = repository.findById(id).orElseThrow(() -> new ResourceNotFoundException("No records found for this ID."));
 
         PersonDTOV1 dto =  ObjectMapper.parseObject(person, PersonDTOV1.class);
-        dto.add(linkTo(methodOn(PersonController.class).findById(id)).withSelfRel());
+        addHateoasLink(dto);
 
         return dto;
     }
@@ -55,12 +55,12 @@ public class PersonServices {
 
         Person personEntity = ObjectMapper.parseObject(person, Person.class);
         PersonDTOV1 dto = ObjectMapper.parseObject(repository.save(personEntity), PersonDTOV1.class);
-        dto.add(linkTo(methodOn(PersonController.class).findById(dto.getId()))).withSelfRel());
+        addHateoasLink(dto);
 
         return dto;
     }
 
-    public PersonDTOV2 createV2(PersonDTOV2 person){
+    /*  public PersonDTOV2 createV2(PersonDTOV2 person){
         if(person == null){
             throw new RequiredObjectIsNullException();
         }
@@ -68,10 +68,9 @@ public class PersonServices {
 
         Person personEntity = personMapper.convertDTOToEntity(person);
         PersonDTOV2 dto = personMapper.convertEntityToDTO(repository.save(personEntity));
-        dto.add(linkTo(methodOn(PersonController.class).findById(dto.getId()))).withSelfRel());
 
         return dto;
-    }
+    } */
 
     public PersonDTOV1 update(PersonDTOV1 person){
         if(person == null){
@@ -88,7 +87,7 @@ public class PersonServices {
         personEntity.setGender(person.getGender());
 
         PersonDTOV1 dto = ObjectMapper.parseObject(repository.save(personEntity), PersonDTOV1.class);
-        dto.add(linkTo(methodOn(PersonController.class).findById(dto.getId())).withSelfRel());
+        addHateoasLink(dto);
 
         return dto;
     }
@@ -98,6 +97,14 @@ public class PersonServices {
         Person person = repository.findById(id).orElseThrow(() -> new ResourceNotFoundException("No records found for this ID."));
 
         repository.delete(person);
+    }
+
+    private static void addHateoasLink(PersonDTOV1 dto) {
+        dto.add(linkTo(methodOn(PersonController.class).findById(dto.getId())).withSelfRel().withType("GET"));
+        dto.add(linkTo(methodOn(PersonController.class).findByAll()).withRel("findAll").withType("GET"));
+        dto.add(linkTo(methodOn(PersonController.class).create(dto)).withRel("create").withType("POST"));
+        dto.add(linkTo(methodOn(PersonController.class).update(dto)).withRel("update").withType("PUT"));
+        dto.add(linkTo(methodOn(PersonController.class).delete(dto.getId())).withRel("delete").withType("DELETE"));
     }
 
 }
