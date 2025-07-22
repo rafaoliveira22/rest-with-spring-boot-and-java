@@ -2,7 +2,6 @@ package br.com.rafaoliveira.services;
 
 import br.com.rafaoliveira.controllers.PersonController;
 import br.com.rafaoliveira.data.dto.v1.PersonDTOV1;
-import br.com.rafaoliveira.data.dto.v2.PersonDTOV2;
 import br.com.rafaoliveira.exceptions.RequiredObjectIsNullException;
 import br.com.rafaoliveira.exceptions.ResourceNotFoundException;
 import br.com.rafaoliveira.mapper.ObjectMapper;

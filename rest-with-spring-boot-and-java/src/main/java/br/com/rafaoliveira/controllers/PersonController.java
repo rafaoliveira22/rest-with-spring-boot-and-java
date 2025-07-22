@@ -1,7 +1,6 @@
 package br.com.rafaoliveira.controllers;
 
 import br.com.rafaoliveira.data.dto.v1.PersonDTOV1;
-import br.com.rafaoliveira.data.dto.v2.PersonDTOV2;
 import br.com.rafaoliveira.services.PersonServices;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.ArraySchema;
